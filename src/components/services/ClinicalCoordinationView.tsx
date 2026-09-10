@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import type { PatientDossier } from '../../types';
 import { getStaffByUnit } from '../../data/stavyaRoster';
 import { 
-  GitMerge, CheckCircle, AlertCircle, Clock, Calendar, 
+  GitMerge, CheckCircle, AlertCircle, Calendar, 
   PhoneCall, ShieldCheck, FileCheck, HeartPulse, Sparkles
 } from 'lucide-react';
 
 interface Props {
   patient: PatientDossier;
-  onUpdatePatient: (patient: PatientDossier) => void;
+  onUpdatePatient?: (patient: PatientDossier) => void;
 }
 
-export const ClinicalCoordinationView: React.FC<Props> = ({ patient, onUpdatePatient }) => {
+export const ClinicalCoordinationView: React.FC<Props> = ({ patient }) => {
   const coordStaff = getStaffByUnit('Clinical Coordinators');
 
   // Pre-Op Surgery Readiness Checklist
@@ -33,19 +33,19 @@ export const ClinicalCoordinationView: React.FC<Props> = ({ patient, onUpdatePat
   const allReady = readiness.every(r => r.done);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-in fade-in duration-200">
       {/* Banner */}
-      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 backdrop-blur-md shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div className="bg-white border border-blue-100 rounded-2xl p-6 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="p-3 rounded-xl bg-sky-500/20 text-sky-400 border border-sky-500/30">
+          <div className="p-3 rounded-xl bg-blue-50 text-blue-600 border border-blue-200">
             <GitMerge className="w-6 h-6" />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-white tracking-wide">
+            <h2 className="text-xl font-heading font-extrabold text-slate-900 tracking-wide">
               Clinical Coordination & Patient Journey Center
             </h2>
-            <p className="text-xs text-slate-400">
-              Department Head: <span className="text-sky-300 font-semibold">Dr. Ravi Baldevbhai Patel</span> • Synchronizing Multi-Disciplinary Spine Care
+            <p className="text-xs text-slate-600">
+              Department Head: <span className="text-blue-700 font-bold">Dr. Ravi Baldevbhai Patel</span> • Synchronizing Multi-Disciplinary Spine Care
             </p>
           </div>
         </div>
@@ -53,10 +53,10 @@ export const ClinicalCoordinationView: React.FC<Props> = ({ patient, onUpdatePat
         <div className="flex items-center gap-3">
           <div className={`px-4 py-2 rounded-xl text-xs font-bold border flex items-center gap-2 ${
             allReady 
-              ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
-              : 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+              ? 'bg-emerald-50 text-emerald-700 border-emerald-300'
+              : 'bg-amber-50 text-amber-800 border-amber-300'
           }`}>
-            {allReady ? <CheckCircle className="w-4 h-4" /> : <AlertCircle className="w-4 h-4" />}
+            {allReady ? <CheckCircle className="w-4 h-4 text-emerald-600" /> : <AlertCircle className="w-4 h-4 text-amber-600" />}
             {allReady ? '100% Surgery Ready' : '7/8 Clearances Complete'}
           </div>
         </div>
@@ -66,18 +66,18 @@ export const ClinicalCoordinationView: React.FC<Props> = ({ patient, onUpdatePat
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left 2 Cols: Surgery Readiness & Continuum Checklist */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 backdrop-blur-md">
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4 text-sky-400" />
+                <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-blue-600" />
                   Pre-Operative Surgery Readiness Matrix (PSRM)
                 </h3>
-                <p className="text-xs text-slate-400 mt-0.5">
+                <p className="text-xs text-slate-500 mt-0.5">
                   Every spine case requires 100% verification by Clinical Coordinator prior to theatre wheel-in
                 </p>
               </div>
-              <span className="text-xs font-mono px-2.5 py-1 rounded-lg bg-slate-800 text-sky-300 font-bold">
+              <span className="text-xs font-mono px-2.5 py-1 rounded-lg bg-blue-50 text-blue-700 border border-blue-200 font-bold">
                 {readiness.filter(r => r.done).length} / {readiness.length} Passed
               </span>
             </div>
@@ -89,29 +89,29 @@ export const ClinicalCoordinationView: React.FC<Props> = ({ patient, onUpdatePat
                   onClick={() => toggleItem(item.id)}
                   className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
                     item.done
-                      ? 'bg-slate-800/40 border-slate-700/60 hover:border-emerald-500/40'
-                      : 'bg-amber-950/20 border-amber-500/40 hover:border-amber-400'
+                      ? 'bg-slate-50 border-slate-200 hover:border-blue-300'
+                      : 'bg-amber-50/70 border-amber-200 hover:border-amber-300'
                   }`}
                 >
                   <div className="flex items-center gap-3">
                     <div className={`w-5 h-5 rounded-lg flex items-center justify-center transition-all ${
-                      item.done ? 'bg-emerald-500 text-white' : 'border border-slate-600'
+                      item.done ? 'bg-emerald-600 text-white' : 'border border-slate-300 bg-white'
                     }`}>
                       {item.done && <CheckCircle className="w-3.5 h-3.5" />}
                     </div>
                     <div>
-                      <div className={`text-xs font-semibold ${item.done ? 'text-slate-200' : 'text-amber-200'}`}>
+                      <div className={`text-xs font-semibold ${item.done ? 'text-slate-900' : 'text-amber-900'}`}>
                         {item.label}
                       </div>
-                      <div className="text-[11px] text-slate-400 flex items-center gap-2 mt-0.5">
-                        <span>Lead: <strong className="text-slate-300">{item.doctor}</strong></span>
+                      <div className="text-[11px] text-slate-500 flex items-center gap-2 mt-0.5">
+                        <span>Lead: <strong className="text-slate-700">{item.doctor}</strong></span>
                         <span>• Status: {item.ts}</span>
                       </div>
                     </div>
                   </div>
 
                   <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${
-                    item.done ? 'bg-emerald-500/20 text-emerald-300' : 'bg-amber-500/20 text-amber-300'
+                    item.done ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'
                   }`}>
                     {item.done ? 'VERIFIED' : 'ACTION REQ'}
                   </span>
@@ -121,46 +121,46 @@ export const ClinicalCoordinationView: React.FC<Props> = ({ patient, onUpdatePat
           </div>
 
           {/* Longitudinal Follow-up Milestones */}
-          <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 backdrop-blur-md">
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-3 flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-sky-400" />
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+            <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-2 flex items-center gap-2">
+              <Calendar className="w-4 h-4 text-blue-600" />
               Post-Discharge Longitudinal Follow-Up Journey
             </h3>
-            <p className="text-xs text-slate-400 mb-4">
+            <p className="text-xs text-slate-500 mb-4">
               Stavya Clinical Coordinators stay in active touch with the patient from Day 0 through Month 12
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
-              <div className="p-3 rounded-xl bg-slate-800/50 border border-slate-700">
-                <div className="text-[11px] font-bold text-sky-400 uppercase">Day 3 Post-Discharge</div>
-                <div className="text-xs font-semibold text-white mt-1 flex items-center gap-1.5">
-                  <PhoneCall className="w-3.5 h-3.5 text-emerald-400" /> Telephonic Welfare Call
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                <div className="text-[11px] font-bold text-blue-700 uppercase">Day 3 Post-Discharge</div>
+                <div className="text-xs font-semibold text-slate-900 mt-1 flex items-center gap-1.5">
+                  <PhoneCall className="w-3.5 h-3.5 text-emerald-600" /> Telephonic Welfare Call
                 </div>
-                <div className="text-[10px] text-slate-400 mt-1">Check wound dressing, pain relief, bowel motility & fever.</div>
+                <div className="text-[10px] text-slate-500 mt-1">Check wound dressing, pain relief, bowel motility & fever.</div>
               </div>
 
-              <div className="p-3 rounded-xl bg-slate-800/50 border border-slate-700">
-                <div className="text-[11px] font-bold text-sky-400 uppercase">Day 14 Post-Op</div>
-                <div className="text-xs font-semibold text-white mt-1 flex items-center gap-1.5">
-                  <FileCheck className="w-3.5 h-3.5 text-sky-400" /> Suture Removal & OPD
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                <div className="text-[11px] font-bold text-blue-700 uppercase">Day 14 Post-Op</div>
+                <div className="text-xs font-semibold text-slate-900 mt-1 flex items-center gap-1.5">
+                  <FileCheck className="w-3.5 h-3.5 text-blue-600" /> Suture Removal & OPD
                 </div>
-                <div className="text-[10px] text-slate-400 mt-1">Inspection by Consultant, remove skin staples, start active physio.</div>
+                <div className="text-[10px] text-slate-500 mt-1">Inspection by Consultant, remove skin staples, start active physio.</div>
               </div>
 
-              <div className="p-3 rounded-xl bg-slate-800/50 border border-slate-700">
-                <div className="text-[11px] font-bold text-sky-400 uppercase">Week 6 Milestone</div>
-                <div className="text-xs font-semibold text-white mt-1 flex items-center gap-1.5">
-                  <HeartPulse className="w-3.5 h-3.5 text-amber-400" /> Flex-Ext X-Rays
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                <div className="text-[11px] font-bold text-blue-700 uppercase">Week 6 Milestone</div>
+                <div className="text-xs font-semibold text-slate-900 mt-1 flex items-center gap-1.5">
+                  <HeartPulse className="w-3.5 h-3.5 text-amber-600" /> Flex-Ext X-Rays
                 </div>
-                <div className="text-[10px] text-slate-400 mt-1">Confirm fusion progression, wean lumbar/cervical brace.</div>
+                <div className="text-[10px] text-slate-500 mt-1">Confirm fusion progression, wean lumbar/cervical brace.</div>
               </div>
 
-              <div className="p-3 rounded-xl bg-slate-800/50 border border-slate-700">
-                <div className="text-[11px] font-bold text-sky-400 uppercase">Month 3 & 12</div>
-                <div className="text-xs font-semibold text-white mt-1 flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-purple-400" /> ODI / NDI Registry
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                <div className="text-[11px] font-bold text-blue-700 uppercase">Month 3 & 12</div>
+                <div className="text-xs font-semibold text-slate-900 mt-1 flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-purple-600" /> ODI / NDI Registry
                 </div>
-                <div className="text-[10px] text-slate-400 mt-1">Functional disability outcome score recorded into research DB.</div>
+                <div className="text-[10px] text-slate-500 mt-1">Functional disability outcome score recorded into research DB.</div>
               </div>
             </div>
           </div>
@@ -168,46 +168,46 @@ export const ClinicalCoordinationView: React.FC<Props> = ({ patient, onUpdatePat
 
         {/* Right Col: Coordination Team & Patient Dossier Summary */}
         <div className="space-y-6">
-          <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 backdrop-blur-md">
-            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">
+          <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+            <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">
               Assigned Clinical Coordinators
             </h3>
             <div className="space-y-2.5">
               {coordStaff.map((staff) => (
-                <div key={staff.id} className="p-3 rounded-xl bg-slate-800/50 border border-slate-700/50 flex justify-between items-center text-xs">
+                <div key={staff.id} className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center text-xs">
                   <div>
-                    <div className="font-bold text-white">{staff.name}</div>
-                    <div className="text-[10px] text-sky-300">{staff.desig}</div>
+                    <div className="font-bold text-slate-900">{staff.name}</div>
+                    <div className="text-[10px] text-blue-700 font-medium">{staff.desig}</div>
                   </div>
                   <div className="text-right">
-                    <span className="text-[10px] font-mono text-slate-400 block">{staff.mobile}</span>
-                    <span className="text-[9px] px-1.5 py-0.5 rounded bg-sky-500/20 text-sky-300">Available</span>
+                    <span className="text-[10px] font-mono text-slate-500 block">{staff.mobile}</span>
+                    <span className="text-[9px] px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 font-semibold">Available</span>
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 backdrop-blur-md space-y-3">
-            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+          <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-3">
+            <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider">
               Patient Primary Attendant Details
             </h3>
-            <div className="p-3.5 rounded-xl bg-slate-800/60 border border-slate-700 space-y-2 text-xs">
+            <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2 text-xs">
               <div className="flex justify-between">
-                <span className="text-slate-400">Emergency Contact:</span>
-                <span className="font-semibold text-white">Family Attendant</span>
+                <span className="text-slate-500">Emergency Contact:</span>
+                <span className="font-semibold text-slate-900">Family Attendant</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-400">Contact Number:</span>
-                <span className="font-mono text-sky-300">+91 98250 19912</span>
+                <span className="text-slate-500">Contact Number:</span>
+                <span className="font-mono text-blue-700 font-bold">+91 98250 19912</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-400">Language Preferred:</span>
-                <span className="text-slate-200">Gujarati / Hindi / English</span>
+                <span className="text-slate-500">Language Preferred:</span>
+                <span className="text-slate-800 font-medium">Gujarati / Hindi / English</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-400">Educational Video Sent:</span>
-                <span className="text-emerald-400 font-semibold">Yes (WhatsApp link)</span>
+                <span className="text-slate-500">Educational Video Sent:</span>
+                <span className="text-emerald-700 font-bold">Yes (WhatsApp link)</span>
               </div>
             </div>
           </div>

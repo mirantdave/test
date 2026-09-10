@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import type { PatientDossier } from '../../types';
 import { getStaffByUnit } from '../../data/stavyaRoster';
 import { 
-  Bed, Users, CheckCircle2, AlertCircle, ShieldAlert, 
-  Phone, UserCheck, HeartPulse, Sparkles
+  Bed, Phone, UserCheck
 } from 'lucide-react';
 
 interface Props {
@@ -60,27 +59,27 @@ export const BedBoardView: React.FC<Props> = ({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-in fade-in duration-200">
       {/* Header Banner */}
-      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 backdrop-blur-md shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div className="bg-white border border-blue-100 rounded-2xl p-6 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="p-3 rounded-xl bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">
+          <div className="p-3 rounded-xl bg-blue-50 text-blue-600 border border-blue-200">
             <Bed className="w-6 h-6" />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-white tracking-wide">
+            <h2 className="text-xl font-heading font-extrabold text-slate-900 tracking-wide">
               Stavya Live Hospital Bed & Floor Board
             </h2>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-600">
               Interactive Inpatient Spine Ward Matrix • HDU • 4th, 5th, 6th Floors
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="px-4 py-2 rounded-xl bg-slate-800/80 border border-slate-700 text-xs text-slate-300 flex items-center gap-3">
-            <span>Occupancy: <strong className="text-indigo-400 font-bold">{occupancyRate}%</strong> ({occupiedCount}/{beds.length} Beds)</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+          <div className="px-4 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 flex items-center gap-3">
+            <span>Occupancy: <strong className="text-blue-700 font-bold">{occupancyRate}%</strong> ({occupiedCount}/{beds.length} Beds)</span>
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
           </div>
         </div>
       </div>
@@ -93,8 +92,8 @@ export const BedBoardView: React.FC<Props> = ({
             onClick={() => setSelectedFloor(fl as any)}
             className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
               selectedFloor === fl
-                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30'
-                : 'bg-slate-900/80 text-slate-400 hover:text-white border border-slate-800'
+                ? 'bg-blue-600 text-white shadow-xs font-bold'
+                : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200 hover:bg-slate-50'
             }`}
           >
             {fl}
@@ -105,13 +104,13 @@ export const BedBoardView: React.FC<Props> = ({
       {/* Floor Incharges Quick Contacts */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         {floorIncharges.map((incharge) => (
-          <div key={incharge.id} className="p-3 rounded-xl bg-slate-900/60 border border-slate-800 flex items-center justify-between text-xs">
+          <div key={incharge.id} className="p-3.5 rounded-xl bg-white border border-slate-200 flex items-center justify-between text-xs shadow-xs">
             <div>
-              <div className="font-bold text-white">{incharge.name}</div>
-              <div className="text-[10px] text-indigo-400">{incharge.desig}</div>
+              <div className="font-bold text-slate-900">{incharge.name}</div>
+              <div className="text-[10px] text-blue-700 font-medium">{incharge.desig}</div>
             </div>
-            <a href={`tel:${incharge.mobile}`} className="flex items-center gap-1 text-[11px] font-mono text-slate-300 hover:text-indigo-300">
-              <Phone className="w-3 h-3 text-indigo-400" /> {incharge.mobile}
+            <a href={`tel:${incharge.mobile}`} className="flex items-center gap-1 text-[11px] font-mono text-slate-600 hover:text-blue-700 font-semibold">
+              <Phone className="w-3 h-3 text-blue-600" /> {incharge.mobile}
             </a>
           </div>
         ))}
@@ -129,46 +128,46 @@ export const BedBoardView: React.FC<Props> = ({
               onClick={() => handleBedClick(bed)}
               className={`p-4 rounded-2xl border transition-all ${
                 isCurrentActive
-                  ? 'bg-indigo-950/40 border-indigo-500 shadow-xl shadow-indigo-500/20 scale-[1.02]'
+                  ? 'bg-blue-50/70 border-blue-400 shadow-md ring-1 ring-blue-300 scale-[1.01]'
                   : isOccupied
-                  ? 'bg-slate-900/80 border-slate-700/80 hover:border-indigo-500/50 cursor-pointer'
-                  : 'bg-slate-950/40 border-slate-800/60 opacity-60'
+                  ? 'bg-white border-slate-200 hover:border-blue-300 hover:shadow-xs cursor-pointer'
+                  : 'bg-slate-50/60 border-slate-200 opacity-60'
               }`}
             >
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-1.5">
-                  <span className="text-base font-black text-white font-mono">{bed.id}</span>
-                  <span className="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-400 font-semibold">
+                  <span className="text-base font-black text-slate-900 font-mono">{bed.id}</span>
+                  <span className="text-[10px] px-2 py-0.5 rounded bg-slate-100 text-slate-600 font-semibold">
                     {bed.floor}
                   </span>
                 </div>
 
                 <span className={`text-[9px] font-bold px-2 py-0.5 rounded ${
-                  isOccupied ? 'bg-emerald-500/20 text-emerald-300' : 'bg-slate-800 text-slate-400'
+                  isOccupied ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-600'
                 }`}>
                   {isOccupied ? 'OCCUPIED' : 'VACANT'}
                 </span>
               </div>
 
-              <div className="text-[11px] text-indigo-300 font-semibold mb-2">{bed.type}</div>
+              <div className="text-[11px] text-blue-700 font-semibold mb-2">{bed.type}</div>
 
               {isOccupied ? (
-                <div className="p-2.5 rounded-xl bg-slate-800/60 border border-slate-700 space-y-1 text-xs">
-                  <div className="font-bold text-white flex items-center justify-between">
+                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1 text-xs">
+                  <div className="font-bold text-slate-900 flex items-center justify-between">
                     <span>{bed.occupant}</span>
                     {isCurrentActive && (
-                      <span className="text-[9px] px-1.5 py-0.5 rounded bg-indigo-500 text-white font-bold">
+                      <span className="text-[9px] px-1.5 py-0.5 rounded bg-blue-600 text-white font-bold">
                         ACTIVE
                       </span>
                     )}
                   </div>
-                  <div className="text-[10px] text-slate-400 truncate">{bed.condition}</div>
-                  <div className="text-[10px] text-teal-400 pt-1 border-t border-slate-700/50 flex items-center gap-1">
-                    <UserCheck className="w-3 h-3" /> Nurse: {bed.nurse}
+                  <div className="text-[10px] text-slate-600 truncate">{bed.condition}</div>
+                  <div className="text-[10px] text-blue-800 font-medium pt-1.5 border-t border-slate-200 flex items-center gap-1">
+                    <UserCheck className="w-3 h-3 text-blue-600" /> Nurse: {bed.nurse}
                   </div>
                 </div>
               ) : (
-                <div className="p-3 rounded-xl bg-slate-900/30 border border-dashed border-slate-800 text-center text-xs text-slate-500 py-4">
+                <div className="p-3 rounded-xl bg-slate-100/70 border border-dashed border-slate-200 text-center text-xs text-slate-500 py-4">
                   {bed.condition}
                 </div>
               )}
