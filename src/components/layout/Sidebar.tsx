@@ -9,14 +9,11 @@ import {
   Pill, 
   ShieldCheck, 
   BedDouble, 
-  Flame, 
   Workflow, 
   Compass, 
-  Users, 
   Sparkles,
   ClipboardList,
   Crosshair,
-  BadgeAlert
 } from 'lucide-react';
 
 export type ActiveService = 
@@ -56,13 +53,12 @@ const NAV_ITEMS: NavItem[] = [
     label: 'Patient 360 & Anatomy',
     lead: 'Spine Column (C1–S5)',
     icon: Layers,
-    badge: 'Core',
     category: 'Patient Core'
   },
   {
     key: 'ward-bed-board',
     label: 'Ward & Bed Matrix',
-    lead: 'HDU · 4th · 5th · 6th Fl',
+    lead: 'Live Bed Board',
     icon: BedDouble,
     category: 'Patient Core'
   },
@@ -71,21 +67,21 @@ const NAV_ITEMS: NavItem[] = [
   {
     key: 'spine-surgery',
     label: 'Spine Surgery Suite',
-    lead: 'Dr. Bharat Dave · Dr. Mirant Dave',
+    lead: 'Operative Planning',
     icon: Stethoscope,
     category: 'Surgical & Acute'
   },
   {
     key: 'anesthesia-pac',
     label: 'Anesthesia & PAC',
-    lead: 'Dr. Kashyap Shah · IONM',
+    lead: 'Clearance & IONM',
     icon: Activity,
     category: 'Surgical & Acute'
   },
   {
     key: 'operating-theatres',
     label: 'Operating Theatres (1-6)',
-    lead: 'Brijesh Bhatt CNO · WHO Safety',
+    lead: 'WHO Safety Protocol',
     icon: Crosshair,
     badge: 'Live',
     category: 'Surgical & Acute'
@@ -93,14 +89,14 @@ const NAV_ITEMS: NavItem[] = [
   {
     key: 'radiology-pacs',
     label: 'Spine Radiology & PACS',
-    lead: 'Dr. Preety Krishnan · MRI/CT',
+    lead: 'MRI · CT · Dynamic X-Ray',
     icon: Scan,
     category: 'Surgical & Acute'
   },
   {
     key: 'cssd-sterile',
     label: 'CSSD & Sterile Sets',
-    lead: 'Dev Puri · Autoclave Batches',
+    lead: 'Autoclave Batch Trace',
     icon: ShieldCheck,
     category: 'Surgical & Acute'
   },
@@ -109,28 +105,28 @@ const NAV_ITEMS: NavItem[] = [
   {
     key: 'nursing-floor',
     label: 'IPD & HDU Nursing',
-    lead: 'Manilal Hadat ANS · Neuro-Vitals',
+    lead: 'Neuro-Vitals & Log-Roll',
     icon: Droplet,
     category: 'Inpatient Care'
   },
   {
     key: 'physio-rehab',
     label: 'Physio & Spine Rehab',
-    lead: 'Dr. Parth Joshi · Braces & Day 1',
+    lead: 'Ambulation Ladder & SLR',
     icon: Workflow,
     category: 'Inpatient Care'
   },
   {
     key: 'pharmacy-sap',
     label: 'Clinical Pharmacy',
-    lead: 'Jatin Pathak · Preena · Pain',
+    lead: 'Analgesia & SAP Timing',
     icon: Pill,
     category: 'Inpatient Care'
   },
   {
     key: 'medical-officers',
     label: 'Medical Officers 24x7',
-    lead: 'Dr. Jaydeep · Dr. Vipul · Ward',
+    lead: 'NEWS2 & Inpatient Notes',
     icon: ClipboardList,
     category: 'Inpatient Care'
   },
@@ -139,21 +135,21 @@ const NAV_ITEMS: NavItem[] = [
   {
     key: 'clinical-coord',
     label: 'Clinical Coordinators',
-    lead: 'Dr. Ravi Patel · Dr. Birju Vyas',
+    lead: 'Patient Journey Milestones',
     icon: Compass,
     category: 'Governance & Hospital'
   },
   {
     key: 'patient-experience',
     label: 'Patient Experience & PRO',
-    lead: 'Parimal Yagnik · Escort Fleet',
+    lead: 'Escorts & PREMs Voice',
     icon: HeartHandshake,
     category: 'Governance & Hospital'
   },
   {
     key: 'quality-research',
-    label: 'Quality, NABH & Research',
-    lead: 'Dr. Akruti Dave · PREM/PROM',
+    label: 'Quality & Clinical Research',
+    lead: 'NABH KPIs & ODI Score',
     icon: Sparkles,
     badge: 'NABH',
     category: 'Governance & Hospital'
@@ -164,12 +160,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeService, onSelectService
   const categories = ['Patient Core', 'Surgical & Acute', 'Inpatient Care', 'Governance & Hospital'] as const;
 
   return (
-    <aside className="w-64 shrink-0 bg-white border-r border-slate-200 p-3 space-y-5 overflow-y-auto hidden lg:block select-none shadow-xs">
+    <aside className="w-60 shrink-0 bg-white border-r border-slate-200/80 p-2.5 space-y-4 overflow-y-auto hidden lg:block select-none">
       {categories.map(cat => {
         const items = NAV_ITEMS.filter(item => item.category === cat);
         return (
-          <div key={cat} className="space-y-1">
-            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-3 mb-1">
+          <div key={cat} className="space-y-0.5">
+            <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider px-2.5 py-1">
               {cat}
             </div>
             {items.map(item => {
@@ -180,31 +176,27 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeService, onSelectService
                 <button
                   key={item.key}
                   onClick={() => onSelectService(item.key)}
-                  className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left transition group ${
+                  className={`w-full flex items-center justify-between px-2.5 py-2 rounded-lg text-left transition text-xs ${
                     isActive
-                      ? 'bg-blue-50 text-blue-900 border border-blue-200 shadow-xs font-semibold'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 border border-transparent'
+                      ? 'bg-blue-50/90 text-blue-700 font-semibold'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                   }`}
                 >
                   <div className="flex items-center gap-2.5 min-w-0">
-                    <div className={`p-1.5 rounded-lg shrink-0 ${
-                      isActive ? 'bg-blue-600 text-white font-bold shadow-xs' : 'bg-slate-100 text-slate-500 group-hover:text-slate-800'
-                    }`}>
-                      <Icon className="w-4 h-4" />
-                    </div>
+                    <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-blue-600' : 'text-slate-400'}`} />
                     <div className="truncate">
-                      <div className="font-bold text-xs truncate leading-tight">
+                      <div className="truncate leading-tight">
                         {item.label}
                       </div>
-                      <div className="text-[10px] text-slate-500 truncate mt-0.5 group-hover:text-slate-600">
+                      <div className="text-[10px] text-slate-400 truncate mt-0.5 font-normal">
                         {item.lead}
                       </div>
                     </div>
                   </div>
 
                   {item.badge && (
-                    <span className={`text-[9px] px-1.5 py-0.2 rounded-full font-bold uppercase tracking-wider shrink-0 ${
-                      isActive ? 'bg-blue-600 text-white' : 'bg-blue-50 text-blue-700 border border-blue-200'
+                    <span className={`text-[9px] px-1.5 py-0.2 rounded font-medium uppercase shrink-0 ${
+                      isActive ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-600'
                     }`}>
                       {item.badge}
                     </span>

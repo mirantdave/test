@@ -1,16 +1,10 @@
 import React from 'react';
 import { 
   Activity, 
-  ShieldAlert, 
-  Flame, 
   Droplet, 
   CheckCircle2, 
-  Clock, 
-  AlertTriangle,
   Stethoscope,
   HeartPulse,
-  Compass,
-  FileCheck
 } from 'lucide-react';
 import type { PatientDossier, PatientStage } from '../../types';
 
@@ -37,72 +31,62 @@ export const PatientHeroBanner: React.FC<PatientHeroBannerProps> = ({
   const currentStageIndex = STAGES.indexOf(patient.currentStage);
 
   const getVasColor = (score: number) => {
-    if (score <= 3) return 'text-emerald-700 bg-emerald-50 border-emerald-300';
-    if (score <= 6) return 'text-amber-700 bg-amber-50 border-amber-300';
-    return 'text-rose-700 bg-rose-50 border-rose-300 animate-pulse';
+    if (score <= 3) return 'text-emerald-700 bg-emerald-50 border-emerald-200';
+    if (score <= 6) return 'text-amber-700 bg-amber-50 border-amber-200';
+    return 'text-rose-700 bg-rose-50 border-rose-200';
   };
 
   return (
-    <div className="w-full bg-white rounded-2xl p-4 sm:p-5 border border-blue-200/90 shadow-sm mb-6 text-slate-900 relative overflow-hidden">
+    <div className="w-full bg-white rounded-xl p-4 sm:p-5 border border-slate-200/80 mb-6 text-slate-900">
       {/* Top Section: Patient Identity & Primary Team */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-slate-100">
-        <div className="flex items-start sm:items-center gap-3.5">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-700 to-sky-500 p-0.5 shadow-md shadow-blue-500/20 shrink-0">
-            <div className="w-full h-full bg-blue-50 rounded-[14px] flex flex-col items-center justify-center font-heading font-extrabold text-blue-900">
-              <span className="text-xl leading-none text-blue-700">{patient.name.charAt(0)}</span>
-              <span className="text-[9px] text-blue-600 uppercase tracking-wider font-bold">{patient.bloodGroup}</span>
-            </div>
+        <div className="flex items-center gap-3.5">
+          <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-100 flex flex-col items-center justify-center font-heading font-bold text-blue-800 shrink-0">
+            <span className="text-lg leading-none">{patient.name.charAt(0)}</span>
+            <span className="text-[9px] text-blue-600 font-semibold">{patient.bloodGroup}</span>
           </div>
 
           <div>
             <div className="flex flex-wrap items-center gap-2">
-              <h1 className="text-lg sm:text-xl font-heading font-bold text-slate-900 tracking-tight">
+              <h1 className="text-lg font-heading font-bold text-slate-900">
                 {patient.name}
               </h1>
-              <span className="text-xs px-2 py-0.5 rounded-md bg-blue-50 border border-blue-200 font-mono text-blue-700 font-semibold">
+              <span className="text-xs px-1.5 py-0.2 rounded bg-slate-100 text-slate-600 font-mono">
                 {patient.uhid}
               </span>
-              <span className="text-xs px-2 py-0.5 rounded-md bg-slate-100 border border-slate-200 text-slate-700 font-medium">
-                {patient.ipdNumber}
-              </span>
-              <span className="text-xs font-semibold text-slate-500">
-                {patient.age} yrs · {patient.gender} · Blood: <strong className="text-rose-600">{patient.bloodGroup}</strong>
+              <span className="text-xs text-slate-500 font-medium">
+                {patient.age}y · {patient.gender} · <strong className="text-blue-700 font-semibold">{patient.roomBed}</strong>
               </span>
             </div>
 
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1 text-xs text-slate-600">
-              <span className="font-bold text-blue-700 flex items-center gap-1">
-                📍 {patient.roomBed} ({patient.floor})
-              </span>
-              <span className="flex items-center gap-1 text-slate-600">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 mt-1 text-xs text-slate-500">
+              <span className="flex items-center gap-1 text-slate-700">
                 <Stethoscope className="w-3.5 h-3.5 text-blue-600" />
-                Surgeon: <span className="text-slate-900 font-bold">{patient.primarySpineConsultant}</span>
+                <span>Surgeon: <strong className="text-slate-900">{patient.primarySpineConsultant}</strong></span>
               </span>
-              <span className="text-slate-500 hidden sm:inline">
-                Assoc: <span className="text-slate-800 font-medium">{patient.associateDoctor}</span>
-              </span>
-              <span className="text-slate-500 hidden md:inline">
-                Admitted: {patient.admitDate}
-              </span>
+              <span>·</span>
+              <span>Floor: {patient.floor}</span>
+              <span>·</span>
+              <span>Admitted: {patient.admitDate}</span>
             </div>
           </div>
         </div>
 
-        {/* Diagnosis & Affected Vertebra Badge */}
-        <div className="flex flex-wrap items-center gap-2 lg:text-right">
-          <div className="bg-slate-50 border border-blue-200/80 rounded-xl px-3 py-2">
-            <div className="text-[10px] text-slate-500 uppercase tracking-wider font-bold">
-              Primary Spine Levels & Diagnosis
+        {/* Primary Diagnosis & Segments */}
+        <div className="flex items-center gap-2 lg:text-right">
+          <div className="bg-slate-50 border border-slate-200/80 rounded-lg px-3 py-1.5 text-left lg:text-right">
+            <div className="text-[10px] text-slate-400 uppercase font-semibold">
+              Diagnosis & Target Levels
             </div>
             <div className="flex items-center gap-2 mt-0.5">
               <div className="flex gap-1">
                 {patient.primarySpineLevels.map(lvl => (
-                  <span key={lvl} className="px-1.5 py-0.5 rounded bg-blue-600 text-white text-xs font-bold font-mono shadow-xs">
+                  <span key={lvl} className="px-1.5 py-0.2 rounded bg-blue-600 text-white text-xs font-bold font-mono">
                     {lvl}
                   </span>
                 ))}
               </div>
-              <span className="text-xs text-slate-800 font-semibold max-w-xs truncate">
+              <span className="text-xs text-slate-800 font-medium max-w-xs truncate">
                 {patient.chiefDiagnosis}
               </span>
             </div>
@@ -110,18 +94,14 @@ export const PatientHeroBanner: React.FC<PatientHeroBannerProps> = ({
         </div>
       </div>
 
-      {/* Middle Section: Longitudinal Spine Care Continuum Stepper */}
-      <div className="py-4 border-b border-slate-100">
-        <div className="flex items-center justify-between text-[11px] font-bold text-slate-500 mb-2 uppercase tracking-wider">
-          <span className="flex items-center gap-1 text-blue-700">
-            <Compass className="w-3.5 h-3.5" /> Longitudinal Spine Pathway Tracker
-          </span>
-          <span className="text-slate-600 font-medium">
-            Active Milestone: <strong className="text-blue-700 font-bold">{patient.currentStage}</strong>
-          </span>
+      {/* Middle Section: Linear Spine Care Continuum Stepper */}
+      <div className="py-3.5 border-b border-slate-100">
+        <div className="flex items-center justify-between text-[11px] text-slate-500 mb-2">
+          <span className="font-semibold text-slate-700">Spine Care Pathway</span>
+          <span className="text-blue-700 font-semibold">Active: {patient.currentStage}</span>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-1.5">
           {STAGES.map((stg, idx) => {
             const isCompleted = idx < currentStageIndex;
             const isCurrent = idx === currentStageIndex;
@@ -129,28 +109,21 @@ export const PatientHeroBanner: React.FC<PatientHeroBannerProps> = ({
             return (
               <div
                 key={stg}
-                className={`p-2 rounded-xl text-center border transition relative overflow-hidden ${
+                className={`px-2 py-1.5 rounded-lg text-center border text-xs transition ${
                   isCurrent
-                    ? 'bg-blue-600 text-white border-blue-600 shadow-md shadow-blue-500/20'
+                    ? 'bg-blue-600 text-white border-blue-600 font-medium'
                     : isCompleted
-                    ? 'bg-blue-50 border-blue-200 text-blue-800 font-medium'
-                    : 'bg-slate-50 border-slate-200 text-slate-400'
+                    ? 'bg-blue-50/70 border-blue-100 text-blue-800'
+                    : 'bg-slate-50 border-slate-100 text-slate-400'
                 }`}
               >
-                <div className="flex items-center justify-center gap-1 mb-1">
+                <div className="flex items-center justify-center gap-1">
                   {isCompleted ? (
-                    <CheckCircle2 className="w-3.5 h-3.5 text-blue-600" />
-                  ) : isCurrent ? (
-                    <Activity className="w-3.5 h-3.5 text-white animate-spin" />
+                    <CheckCircle2 className="w-3 h-3 text-blue-600 shrink-0" />
                   ) : (
-                    <Clock className="w-3.5 h-3.5 text-slate-400" />
+                    <span className="text-[10px] font-mono opacity-75">{idx + 1}.</span>
                   )}
-                  <span className={`text-[10px] font-mono ${isCurrent ? 'text-blue-100' : ''}`}>
-                    Stage {idx + 1}
-                  </span>
-                </div>
-                <div className={`text-[11px] font-bold leading-tight ${isCurrent ? 'text-white' : ''}`}>
-                  {stg}
+                  <span className="truncate text-[11px]">{stg}</span>
                 </div>
               </div>
             );
@@ -158,112 +131,74 @@ export const PatientHeroBanner: React.FC<PatientHeroBannerProps> = ({
         </div>
       </div>
 
-      {/* Bottom Section: Live Spine Clinical Metrics Strip */}
-      <div className="pt-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+      {/* Bottom Section: 4 Minimalist Clinical Metric Cards */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3.5">
         {/* Pain VAS */}
-        <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-2.5">
-          <div className="p-2 rounded-lg bg-white border border-slate-200 text-amber-600 shrink-0 shadow-2xs">
-            <Flame className="w-4 h-4" />
-          </div>
-          <div>
-            <span className="text-[10px] text-slate-500 uppercase tracking-wider block font-bold">VAS Pain Scale</span>
-            <div className="flex items-center gap-1.5 mt-0.5">
-              <span className={`px-2 py-0.5 rounded-md text-xs font-bold border ${getVasColor(patient.vasPainScore)}`}>
-                {patient.vasPainScore} / 10
-              </span>
-              <span className="text-[10px] text-slate-600 font-medium">
-                {patient.vasPainScore <= 3 ? 'Controlled' : patient.vasPainScore <= 6 ? 'Moderate' : 'Severe'}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* Disability ODI */}
-        <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-2.5">
-          <div className="p-2 rounded-lg bg-white border border-slate-200 text-blue-600 shrink-0 shadow-2xs">
-            <HeartPulse className="w-4 h-4" />
-          </div>
-          <div>
-            <span className="text-[10px] text-slate-500 uppercase tracking-wider block font-bold">ODI Disability</span>
-            <div className="flex items-center gap-1 mt-0.5 font-bold text-xs text-slate-900">
-              <span>{patient.oswestryDisabilityIndex}%</span>
-              <span className="text-[10px] text-slate-500 font-normal">(EQ-5D: {patient.eq5dHealthScore})</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Surgical Drain Output */}
-        <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-2.5">
-          <div className="p-2 rounded-lg bg-white border border-slate-200 text-sky-600 shrink-0 shadow-2xs">
-            <Droplet className="w-4 h-4" />
-          </div>
-          <div>
-            <span className="text-[10px] text-slate-500 uppercase tracking-wider block font-bold">Hemovac Drain</span>
-            <div className="flex items-center gap-1 mt-0.5 font-bold text-xs">
-              <span className={patient.nursing.drainOutputMl24h > 100 ? 'text-rose-600' : 'text-emerald-600'}>
-                {patient.nursing.drainOutputMl24h} mL
-              </span>
-              <span className="text-[10px] text-slate-500 font-normal">/24h</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Neuro Vitals & Motor */}
-        <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-2.5">
-          <div className="p-2 rounded-lg bg-white border border-slate-200 text-emerald-600 shrink-0 shadow-2xs">
-            <Activity className="w-4 h-4" />
-          </div>
-          <div>
-            <span className="text-[10px] text-slate-500 uppercase tracking-wider block font-bold">Vitals & Motor</span>
-            <div className="text-xs font-bold text-slate-900 mt-0.5">
-              BP: {patient.nursing.vitals.bp}
-            </div>
-            <span className="text-[10px] text-slate-500">
-              Pulse: {patient.nursing.vitals.pulse} · SpO2: {patient.nursing.vitals.spo2}%
+        <div 
+          onClick={() => onNavigateToService && onNavigateToService('pharmacy-sap')}
+          className="p-3 rounded-lg bg-slate-50/70 border border-slate-200/70 hover:border-slate-300 transition cursor-pointer"
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-semibold text-slate-400 uppercase">Pain Score</span>
+            <span className={`text-[10px] font-bold px-1.5 py-0.2 rounded border ${getVasColor(patient.vasPainScore)}`}>
+              VAS {patient.vasPainScore}/10
             </span>
           </div>
+          <div className="text-xs font-semibold text-slate-800 mt-1">
+            {patient.pharmacy.multimodalPainRegimen[0]}
+          </div>
+          <div className="text-[10px] text-slate-400 mt-0.5">Analgesia Active</div>
         </div>
 
-        {/* Spine Brace & Mobilization */}
-        <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-2.5">
-          <div className="p-2 rounded-lg bg-white border border-slate-200 text-blue-600 shrink-0 shadow-2xs">
-            <FileCheck className="w-4 h-4" />
-          </div>
-          <div>
-            <span className="text-[10px] text-slate-500 uppercase tracking-wider block font-bold">Spine Orthosis</span>
-            <div className="text-xs font-bold text-blue-700 truncate max-w-[130px] mt-0.5" title={patient.physioRehab.bracePrescribed}>
-              {patient.physioRehab.bracePrescribed}
-            </div>
-            <span className="text-[10px] text-slate-500 font-medium">
-              {patient.physioRehab.ambulationMilestone}
+        {/* Neuro Examination */}
+        <div 
+          onClick={() => onNavigateToService && onNavigateToService('patient-360')}
+          className="p-3 rounded-lg bg-slate-50/70 border border-slate-200/70 hover:border-slate-300 transition cursor-pointer"
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-semibold text-slate-400 uppercase">Motor Power</span>
+            <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200">
+              EHL {patient.neuroExam.motorPower.l5_greatToeExtension}/5
             </span>
           </div>
+          <div className="text-xs font-semibold text-slate-800 mt-1">
+            DF: {patient.neuroExam.motorPower.l4_ankleDorsiflexion}/5 · PF: {patient.neuroExam.motorPower.s1_anklePlantarflexion}/5
+          </div>
+          <div className="text-[10px] text-slate-400 mt-0.5">Perianal S3-S5 Normal</div>
         </div>
 
-        {/* Red Flags / Safety Status */}
-        <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-2.5">
-          <div className={`p-2 rounded-lg shrink-0 ${
-            patient.neuroExam.redFlags.caudaEquina || patient.neuroExam.redFlags.progressiveMotorLoss
-              ? 'bg-rose-100 text-rose-600'
-              : 'bg-emerald-100 text-emerald-600'
-          }`}>
-            <ShieldAlert className="w-4 h-4" />
-          </div>
-          <div>
-            <span className="text-[10px] text-slate-500 uppercase tracking-wider block font-bold">Spine Red Flags</span>
-            <div className="text-xs font-bold mt-0.5">
-              {patient.neuroExam.redFlags.progressiveMotorLoss ? (
-                <span className="text-rose-600 font-bold flex items-center gap-1">
-                  <AlertTriangle className="w-3 h-3" /> Motor Deficit
-                </span>
-              ) : (
-                <span className="text-emerald-700 font-semibold">No Red Flags</span>
-              )}
-            </div>
-            <span className="text-[10px] text-slate-500">
-              Fall Morse: {patient.nursing.fallRiskScoreMorse}
+        {/* Surgical Drain */}
+        <div 
+          onClick={() => onNavigateToService && onNavigateToService('nursing-floor')}
+          className="p-3 rounded-lg bg-slate-50/70 border border-slate-200/70 hover:border-slate-300 transition cursor-pointer"
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-semibold text-slate-400 uppercase">Drain Output</span>
+            <span className="text-[10px] font-bold text-blue-700 bg-blue-50 px-1.5 py-0.2 rounded border border-blue-200">
+              {patient.nursing.drainOutputMl24h} mL/24h
             </span>
           </div>
+          <div className="text-xs font-semibold text-slate-800 mt-1">
+            {patient.nursing.drainOutputMl24h < 50 ? 'Cleared for Removal' : 'Active Negative Suction'}
+          </div>
+          <div className="text-[10px] text-slate-400 mt-0.5">Dressing Intact</div>
+        </div>
+
+        {/* Ambulation & Physio */}
+        <div 
+          onClick={() => onNavigateToService && onNavigateToService('physio-rehab')}
+          className="p-3 rounded-lg bg-slate-50/70 border border-slate-200/70 hover:border-slate-300 transition cursor-pointer"
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-semibold text-slate-400 uppercase">Ambulation</span>
+            <span className="text-[10px] font-bold text-blue-700 bg-blue-50 px-1.5 py-0.2 rounded border border-blue-200">
+              SLR {patient.physioRehab.slrRightDegrees}°
+            </span>
+          </div>
+          <div className="text-xs font-semibold text-slate-800 mt-1 truncate">
+            {patient.physioRehab.ambulationMilestone}
+          </div>
+          <div className="text-[10px] text-slate-400 mt-0.5">{patient.physioRehab.bracePrescribed}</div>
         </div>
       </div>
     </div>
