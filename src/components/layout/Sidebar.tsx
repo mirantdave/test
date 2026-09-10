@@ -164,12 +164,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeService, onSelectService
   const categories = ['Patient Core', 'Surgical & Acute', 'Inpatient Care', 'Governance & Hospital'] as const;
 
   return (
-    <aside className="w-64 shrink-0 glass-panel border-r border-slate-800/80 p-3 space-y-5 overflow-y-auto hidden lg:block select-none">
+    <aside className="w-64 shrink-0 bg-white border-r border-slate-200 p-3 space-y-5 overflow-y-auto hidden lg:block select-none shadow-xs">
       {categories.map(cat => {
         const items = NAV_ITEMS.filter(item => item.category === cat);
         return (
           <div key={cat} className="space-y-1">
-            <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider px-3 mb-1">
+            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-3 mb-1">
               {cat}
             </div>
             {items.map(item => {
@@ -182,21 +182,21 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeService, onSelectService
                   onClick={() => onSelectService(item.key)}
                   className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left transition group ${
                     isActive
-                      ? 'bg-gradient-to-r from-cyan-600/30 to-blue-600/20 text-white border border-cyan-500/40 shadow-md shadow-cyan-500/10'
-                      : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 border border-transparent'
+                      ? 'bg-blue-50 text-blue-900 border border-blue-200 shadow-xs font-semibold'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 border border-transparent'
                   }`}
                 >
                   <div className="flex items-center gap-2.5 min-w-0">
                     <div className={`p-1.5 rounded-lg shrink-0 ${
-                      isActive ? 'bg-cyan-500 text-slate-950 font-bold' : 'bg-slate-800/80 text-slate-400 group-hover:text-white'
+                      isActive ? 'bg-blue-600 text-white font-bold shadow-xs' : 'bg-slate-100 text-slate-500 group-hover:text-slate-800'
                     }`}>
                       <Icon className="w-4 h-4" />
                     </div>
                     <div className="truncate">
-                      <div className="font-semibold text-xs truncate leading-tight">
+                      <div className="font-bold text-xs truncate leading-tight">
                         {item.label}
                       </div>
-                      <div className="text-[10px] text-slate-500 truncate mt-0.5 group-hover:text-slate-400">
+                      <div className="text-[10px] text-slate-500 truncate mt-0.5 group-hover:text-slate-600">
                         {item.lead}
                       </div>
                     </div>
@@ -204,7 +204,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeService, onSelectService
 
                   {item.badge && (
                     <span className={`text-[9px] px-1.5 py-0.2 rounded-full font-bold uppercase tracking-wider shrink-0 ${
-                      isActive ? 'bg-cyan-400 text-slate-950' : 'bg-slate-800 text-cyan-400 border border-cyan-800/40'
+                      isActive ? 'bg-blue-600 text-white' : 'bg-blue-50 text-blue-700 border border-blue-200'
                     }`}>
                       {item.badge}
                     </span>

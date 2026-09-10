@@ -93,7 +93,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-cyan-500 selection:text-slate-950 font-sans">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col selection:bg-blue-600 selection:text-white font-sans">
       {/* Universal Top Header */}
       <Header
         patients={patients}
@@ -241,65 +241,65 @@ export const App: React.FC = () => {
 
       {/* Fast-Track Emergency Spine Admission Modal */}
       {isNewPatientModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
-          <div className="w-full max-w-lg bg-slate-900 border border-cyan-500/40 rounded-2xl p-6 shadow-2xl relative animate-in fade-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
+          <div className="w-full max-w-lg bg-white border border-blue-200 rounded-2xl p-6 shadow-2xl relative animate-in fade-in zoom-in-95 duration-200 text-slate-900">
             <button
               onClick={() => setIsNewPatientModalOpen(false)}
-              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white rounded-xl bg-slate-800 hover:bg-slate-700 transition"
+              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-600 rounded-xl bg-slate-100 hover:bg-slate-200 transition"
             >
               <X className="w-4 h-4" />
             </button>
 
             <div className="flex items-center gap-3 mb-5">
-              <div className="p-2.5 rounded-xl bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">
+              <div className="p-2.5 rounded-xl bg-blue-50 text-blue-600 border border-blue-200">
                 <PlusCircle className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-white">Fast-Track Spine Inpatient Admission</h3>
-                <p className="text-xs text-slate-400">Instantly generate a complete clinical spine dossier</p>
+                <h3 className="text-lg font-bold text-slate-900">Fast-Track Spine Inpatient Admission</h3>
+                <p className="text-xs text-slate-500">Instantly generate a complete clinical spine dossier</p>
               </div>
             </div>
 
             <form onSubmit={handleCreatePatient} className="space-y-4">
               <div>
-                <label className="text-xs font-semibold text-slate-300 block mb-1">Patient Full Name</label>
+                <label className="text-xs font-semibold text-slate-700 block mb-1">Patient Full Name</label>
                 <input
                   type="text"
                   required
                   value={newPatientName}
                   onChange={(e) => setNewPatientName(e.target.value)}
                   placeholder="e.g., Jayantilal H. Patel"
-                  className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white text-xs focus:outline-none focus:border-cyan-500"
+                  className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-xs focus:outline-none focus:border-blue-500"
                 />
               </div>
 
               <div className="grid grid-cols-3 gap-3">
                 <div>
-                  <label className="text-xs font-semibold text-slate-300 block mb-1">Age</label>
+                  <label className="text-xs font-semibold text-slate-700 block mb-1">Age</label>
                   <input
                     type="number"
                     value={newPatientAge}
                     onChange={(e) => setNewPatientAge(Number(e.target.value))}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white text-xs focus:outline-none focus:border-cyan-500"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-xs focus:outline-none focus:border-blue-500"
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-slate-300 block mb-1">Gender</label>
+                  <label className="text-xs font-semibold text-slate-700 block mb-1">Gender</label>
                   <select
                     value={newPatientGender}
                     onChange={(e) => setNewPatientGender(e.target.value as any)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white text-xs focus:outline-none focus:border-cyan-500"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-xs focus:outline-none focus:border-blue-500"
                   >
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                   </select>
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-slate-300 block mb-1">Blood Group</label>
+                  <label className="text-xs font-semibold text-slate-700 block mb-1">Blood Group</label>
                   <select
                     value={newPatientBlood}
                     onChange={(e) => setNewPatientBlood(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white text-xs focus:outline-none focus:border-cyan-500"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-xs focus:outline-none focus:border-blue-500"
                   >
                     {['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'].map(bg => (
                       <option key={bg} value={bg}>{bg}</option>
@@ -309,22 +309,22 @@ export const App: React.FC = () => {
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-slate-300 block mb-1">Spine Diagnosis</label>
+                <label className="text-xs font-semibold text-slate-700 block mb-1">Spine Diagnosis</label>
                 <input
                   type="text"
                   value={newPatientDiagnosis}
                   onChange={(e) => setNewPatientDiagnosis(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white text-xs focus:outline-none focus:border-cyan-500"
+                  className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-xs focus:outline-none focus:border-blue-500"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-semibold text-slate-300 block mb-1">Ward Floor</label>
+                  <label className="text-xs font-semibold text-slate-700 block mb-1">Ward Floor</label>
                   <select
                     value={newPatientFloor}
                     onChange={(e) => setNewPatientFloor(e.target.value as any)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white text-xs focus:outline-none focus:border-cyan-500"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-xs focus:outline-none focus:border-blue-500"
                   >
                     <option value="3rd Floor HDU">3rd Floor HDU</option>
                     <option value="4th Floor Ward">4th Floor Ward</option>
@@ -333,12 +333,12 @@ export const App: React.FC = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-slate-300 block mb-1">Room / Bed No.</label>
+                  <label className="text-xs font-semibold text-slate-700 block mb-1">Room / Bed No.</label>
                   <input
                     type="text"
                     value={newPatientRoom}
                     onChange={(e) => setNewPatientRoom(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white text-xs focus:outline-none focus:border-cyan-500"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-xs focus:outline-none focus:border-blue-500"
                   />
                 </div>
               </div>
@@ -346,14 +346,14 @@ export const App: React.FC = () => {
               <div className="pt-2 flex gap-3">
                 <button
                   type="submit"
-                  className="flex-1 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-semibold text-xs shadow-lg shadow-cyan-600/30 transition flex items-center justify-center gap-2"
+                  className="flex-1 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shadow-md shadow-blue-600/20 transition flex items-center justify-center gap-2"
                 >
                   <Check className="w-4 h-4" /> Confirm & Open Dossier
                 </button>
                 <button
                   type="button"
                   onClick={() => setIsNewPatientModalOpen(false)}
-                  className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs transition"
+                  className="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium transition"
                 >
                   Cancel
                 </button>
